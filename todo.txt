@@ -1,0 +1,13 @@
+This is basically just a list of what we need to do for the program
+
+Betting system, such as chip value, ante system, etc
+
+Action system: check, bet, call, raise, fold, etc
+
+Hand evaluation: Testing to see what everyones hands are
+to determine winner
+
+Perhaps later stuff:
+
+Hand percentages, showing your outs/ other peoples outs, etc
+
