@@ -23,9 +23,8 @@ int main(int argc, char **argv) {
 
     int pot = 0;
     int ante = 10;
-    char names[2];
-    char name;
-    int startingBal;
+    char names[10];
+    int *startingBal;
     bool cont = true;
     bool P1canAdvance = false;
     bool P2canAdvance = false;
@@ -43,15 +42,14 @@ int main(int argc, char **argv) {
     
     for (int i = 0; i<PLAYER_COUNT; i++) {
     printf("Player %d, what is your name? \n", i);
-    scanf("%s", name);
-    names[i] = name;
+    scanf("%s", names);
     printf("\n");
     }
     sleep(2);
     printf("What is the starting balance for each player? \n");
     scanf("%d", startingBal);
     printf("\n");
-    playersInit(*names, PLAYER_COUNT, startingBal);
+    playersInit(names, PLAYER_COUNT, *startingBal);
     sleep(2);
 
     printf("Let's get into the game!");
@@ -78,7 +76,7 @@ int main(int argc, char **argv) {
             sleep(2);
             printf("The current pot size is %d \n", pot);
 
-            turn_action decision = &actionOnTurn(0);
+            turn_action decision = *actionOnTurn(0);
             if (decision.action == BET || decision.action == RAISE) {
                 pot = pot + decision.bet;
                 players[i].balance = players[i].balance - decision.bet;
@@ -107,7 +105,7 @@ int main(int argc, char **argv) {
         sleep(3);
         printf("The current pot is %d, now onto the flop! \n", pot);
         sleep(3);
-        dealToTable(shuffled, table.board.communityCards, 3);
+        dealToTable(shuffled, table.board.communityCards, 3); //There is no method for this listed anywhere -Matt
         printCards(table.board.communityCards, 0, 3);
         printf("Now, let the next street begin!");
 
@@ -120,7 +118,7 @@ int main(int argc, char **argv) {
             sleep(2);
             printf("The current pot size is %d \n", pot);
 
-            turn_action decision = &actionOnTurn(0);
+            turn_action decision = *actionOnTurn(0);
             if (decision.action == BET || decision.action == RAISE) {
                 pot = pot + decision.bet;
                 players[i].balance = players[i].balance - decision.bet;
@@ -133,7 +131,7 @@ int main(int argc, char **argv) {
                 } else {
                     P2canAdvance = true;
                 }
-            } else if (decision.action = CHECK) {
+            } else if (decision.action == CHECK) {
                 if (i == 0) {
                     P1canAdvance = true;
                 } else {
@@ -167,7 +165,7 @@ int main(int argc, char **argv) {
             sleep(2);
             printf("The current pot size is %d \n", pot);
 
-            turn_action decision = &actionOnTurn(0);
+            turn_action decision = *actionOnTurn(0);
             if (decision.action == BET || decision.action == RAISE) {
                 pot = pot + decision.bet;
                 players[i].balance = players[i].balance - decision.bet;
@@ -180,7 +178,7 @@ int main(int argc, char **argv) {
                 } else {
                     P2canAdvance = true;
                 }
-            } else if (decision.action = CHECK) {
+            } else if (decision.action == CHECK) {
                 if (i == 0) {
                     P1canAdvance = true;
                 } else {
@@ -215,7 +213,7 @@ int main(int argc, char **argv) {
             sleep(2);
             printf("The current pot size is %d \n", pot);
 
-            turn_action decision = &actionOnTurn(0);
+            turn_action decision = *actionOnTurn(0);
             if (decision.action == BET || decision.action == RAISE) {
                 pot = pot + decision.bet;
                 players[i].balance = players[i].balance - decision.bet;
@@ -228,7 +226,7 @@ int main(int argc, char **argv) {
                 } else {
                     P2canAdvance = true;
                 }
-            } else if (decision.action = CHECK) {
+            } else if (decision.action == CHECK) {
                 if (i == 0) {
                     P1canAdvance = true;
                 } else {
@@ -250,12 +248,12 @@ int main(int argc, char **argv) {
         P2canAdvance = false;
         sleep(3);
         printf("Wecome to the showdown!!! \n");
-        printf("This will be the last chance to place bets before you reveal your hand \n")
+        printf("This will be the last chance to place bets before you reveal your hand \n");
         printf("The current pot is %d \n", pot);
         sleep(3);
         dealToTable(shuffled, table.board.communityCards, 3);
         printCards(table.board.communityCards, 0, 3);
-        sleep(2)
+        sleep(2);
 
         for (int i = 0; i < PLAYER_COUNT; i++) {
             printf("Please pass the laptop to Player %d \n", i+1);
@@ -266,7 +264,7 @@ int main(int argc, char **argv) {
             sleep(2);
             printf("The current pot size is %d \n", pot);
 
-            turn_action decision = &actionOnTurn(0);
+            turn_action decision = *actionOnTurn(0);
             if (decision.action == BET || decision.action == RAISE) {
                 pot = pot + decision.bet;
                 players[i].balance = players[i].balance - decision.bet;
@@ -279,7 +277,7 @@ int main(int argc, char **argv) {
                 } else {
                     P2canAdvance = true;
                 }
-            } else if (decision.action = CHECK) {
+            } else if (decision.action == CHECK) {
                 if (i == 0) {
                     P1canAdvance = true;
                 } else {

@@ -51,7 +51,7 @@ typedef struct{
     char name[NAME_LENGTH];
     Hand hand; //array of card "slots" (ptrs), & points
     char selectedCard; //selected card index
-    unsigned char balance; //current balance of your bank
+    int balance; //current balance of your bank
     CommunityCards bestHand; //Holds the best cards that make the best hand
     HandType bHandType;
 } Player;

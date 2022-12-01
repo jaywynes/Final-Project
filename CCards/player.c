@@ -21,8 +21,8 @@ void hideCards(Hand* hand ) {
 }
 
 void playersInit(char *names, int numPlayers, int startingBalance) {
-    for (int i = 0; i < sizeof(players); i++) {
-        players[i].balance = 0;
+    for (int i = 0; i < numPlayers; i++) {
+        players[i].balance = startingBalance;
         strcpy(players[i].name, names);
     }
 }
