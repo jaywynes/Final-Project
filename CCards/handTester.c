@@ -3,6 +3,7 @@
 #include <locale.h> //unicode
 #include <wchar.h> //unicode
 #include "player.h"
+#include "handTester.h"
 
 
 
@@ -204,6 +205,7 @@ void matchTester(CardPool *available, Player **play, int currentPlayer, TempCard
                         l2++;
                     }
                     opp[currentPlayer].bHandType = Quads;
+                    l2++;
                     i = i+3;
                     break;
 
@@ -212,7 +214,7 @@ void matchTester(CardPool *available, Player **play, int currentPlayer, TempCard
                     for (int k = i; k < sizeof(pool.availableCards); k++) {
                         opp[currentPlayer].bestHand.communityCards[k2] = pool.availableCards[k];
                         trips[k2] = k;
-                        k++;
+                        k2++;
                     }
 
                     i = i+2;
@@ -240,13 +242,24 @@ void matchTester(CardPool *available, Player **play, int currentPlayer, TempCard
         for (int i = 0; i < sizeof(pool.availableCards); i++) {
             if (quads[0] != i && quads[1] != i && quads[2] != i && quads[3] != i) {
                 bestTemp.tempCards[k] = pool.availableCards[i];
+                k++;
             }
         }
-
+        opp[currentPlayer].bestHand.communityCards[l2] = findHighest(bestTemp.tempCards, numExtra);
+    }
 
 }
 
 Card *findHighest(Card **leftover, int numExtra) {
+    Card *leftoverCards = *leftover;
+    Card returnCards[numExtra];
+    handSorter(&leftoverCards);
+
+    for (int i = 0; i < numExtra; i++) {
+        returnCards[i] = leftoverCards[i];
+    }
+
+    return returnCards;
 
 }
 
