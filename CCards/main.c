@@ -250,12 +250,12 @@ int main(int argc, char **argv) {
         P2canAdvance = false;
         sleep(3);
         printf("Wecome to the showdown!!! \n");
-        printf("This will be the last chance to place bets before you reveal your hand \n")
+        printf("This will be the last chance to place bets before you reveal your hand \n");
         printf("The current pot is %d \n", pot);
         sleep(3);
         dealToTable(shuffled, table.board.communityCards, 3);
         printCards(table.board.communityCards, 0, 3);
-        sleep(2)
+        sleep(2);
 
         for (int i = 0; i < PLAYER_COUNT; i++) {
             printf("Please pass the laptop to Player %d \n", i+1);
