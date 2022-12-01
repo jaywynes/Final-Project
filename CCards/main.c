@@ -18,11 +18,42 @@ Card deck[DECK_SIZE];
 Card *shuffled[DECK_SIZE];
 
 int main(int argc, char **argv) {
+
+    char names[2];
+    char name;
+    int startingBal;
+    bool cont = true;
+
+    printf("Welcome to Texas Holdem! \n \n");
+    sleep(5);
+    printf("Let's get into the game! \n");
     printf("%s",RESET_COLOR); //default color
     initCard(); // set up unicode printing
     initDeck(deck);
     shuffleDeck(shuffled, deck);
     Card *c = cutDeck(shuffled);
+    system("clear"); //clear the console
+    
+    for (int i = 0; i<PLAYER_COUNT; i++) {
+    printf("Player %d, what is your name? \n", i);
+    scanf("%s", name);
+    names[i] = name;
+    printf("\n");
+    }
+    sleep(2);
+    printf("What is the starting balance for each player? \n");
+    scanf("%d", startingBal);
+    printf("\n");
+    playersInit(*names, PLAYER_COUNT, startingBal);
+    sleep(2);
+
+    printf("Let's get into the game!");
+
+    while(cont) {
+
+    }
+
+ 
     printf("suit: %d, type: %d\n", c->suit, c->type);
     system("clear"); //clear console
     printf("Cut Card.\n");
@@ -32,7 +63,7 @@ int main(int argc, char **argv) {
     c->selected = 0; // make green for rest of deck
     printf("Deck before dealing:\n");
     printRestOfDeck(shuffled); // Printing the deck makes the cards visible
-    playersInit();
+    
     deal(shuffled, &players[0].hand,&players[1].hand,5);
     printf("%s Hand:\n", players[0].name);
     printCards(players[0].hand.cards, 0, 5);
@@ -86,3 +117,5 @@ int main(int argc, char **argv) {
     }
 
 }
+
+//int compareHands

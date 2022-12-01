@@ -17,10 +17,6 @@ River/Showdown
 Betting occurs during each Street, and there are different dealing amounts
 
 
-*Button Passing*
-Play has 3 "roles", the button, the small blind, and the big blind
-Button is passed around, 1 seat to the left after every round. One seat to buttons left is small blind, 2 seats is big blind, they must bet required ammounts
-
 *Hand Calculation*
 Need to have a calculation done at the end of a hand to caculate the best hand everyoe posesses from their own 2 card hand to the 5 on the "table", must use Number and Suit for comparison, and must test for the following hands, lowest strength to highest:
 
@@ -41,4 +37,9 @@ CHeck, Call, Raise, Fold, etc
 *Hand percentage System*
 Shows player outs, potential ranges, etc
 
-### Other Stuff to be added
+### Other Stuff to be added later
+
+
+*Button Passing*
+Play has 3 "roles", the button, the small blind, and the big blind
+Button is passed around, 1 seat to the left after every round. One seat to buttons left is small blind, 2 seats is big blind, they must bet required ammounts

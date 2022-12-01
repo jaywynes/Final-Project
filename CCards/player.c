@@ -4,6 +4,7 @@
 const char *const COMPUTER_NAME = "Computer";
 char *const PLAYER_NAME = "Player";
 Player players[PLAYER_COUNT]; //initialize players
+Table table; //Initializes the table
 
 //makes all cards visible
 void revealCards(Hand* hand ) {
@@ -19,9 +20,9 @@ void hideCards(Hand* hand ) {
     }
 }
 
-void playersInit() {
-    players[0].score=0;
-    players[1].score=0;
-    strcpy(players[0].name,COMPUTER_NAME);
-    strcpy(players[1].name,PLAYER_NAME);
+void playersInit(char *names, int numPlayers, int startingBalance) {
+    for (int i = 0; i < sizeof(players); i++) {
+        players[i].balance = 0;
+        strcpy(players[i].name, names);
+    }
 }

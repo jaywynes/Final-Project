@@ -14,7 +14,7 @@ const static char *RESET_COLOR = "\x1b[36m";
 const static int CARD_WIDTH = 4; //minimum 3 (adds two for edges)
 //const static int CARD_HEIGHT = 3;
 
-static int suitSymbol[] = {0x2660,0x2665,0x2666,0x2663}; //unicode values
+static int suitSymbol[] = {0x2660,0x2665,0x2666,0x2663}; //unicode values, Spade, heart, Dia, Club
 static int wallSymbol[] = {0x2550,0x2551,0x2554,0x2557,0x255A,0x255D}; //unicode symbols for boarders
 
 
