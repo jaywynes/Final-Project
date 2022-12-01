@@ -9,7 +9,7 @@ typedef enum action {
   FOLD
 } action;
 
-typedef struct turn_action {
+typedef struct {
   action action;
   int bet;
 } turn_action;

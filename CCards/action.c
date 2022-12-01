@@ -40,7 +40,7 @@ turn_action *actionOnTurn(int bet) {
         printf("Invalid action, please enter a correct turn input.");
       }
     } else { //if bet == 0
-      printf("It's your turn! Would you like to check(1) or bet(2)?\n");
+      printf("It's your turn! Would you like to check(1) or bet(2) or fold(3)?\n");
       scanf("%d", actionNum);
       if (actionNum == 1) {
         turn -> action = CHECK;
@@ -60,7 +60,12 @@ turn_action *actionOnTurn(int bet) {
           }
         }
         cont = false;
-      } else {
+      } else if (actionNum == 3) {
+        turn -> action = FOLD;
+        printf("You've decided to fold. You have lost this round and cannot get any of your previous bets you've put into the pot for this round back.");
+        turn -> bet = 0; 
+        cont = false;
+        } else {
         printf("Invalid action, please enter a correct turn input.");
       }
     }

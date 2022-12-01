@@ -34,8 +34,7 @@ Royal Flush: 5 Cards of same Suit, with Ranks 10, J, Q, K, A
 *Player Action System*
 CHeck, Call, Raise, Fold, etc
 
-*Hand percentage System*
-Shows player outs, potential ranges, etc
+
 
 ### Other Stuff to be added later
 
@@ -43,3 +42,6 @@ Shows player outs, potential ranges, etc
 *Button Passing*
 Play has 3 "roles", the button, the small blind, and the big blind
 Button is passed around, 1 seat to the left after every round. One seat to buttons left is small blind, 2 seats is big blind, they must bet required ammounts
+
+*Hand percentage System*
+Shows player outs, potential ranges, etc

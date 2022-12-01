@@ -19,10 +19,11 @@ void initDeck(Card *deck) {
             //initialize all variables
             deck[deckIndex].suit = suit;
             deck[deckIndex].type = number;
+            deck[deckIndex].value = number;
             deck[deckIndex].hidden = HIDE_CARDS;
             deck[deckIndex].selected = false;
              //value either number value, or 10 for face card
-            deck[deckIndex].value = (number > 10) ? 10: number;
+            //deck[deckIndex].value = (number > 10) ? 10: number;
             deckIndex++; //increase to next slot
         }
     }
@@ -72,6 +73,15 @@ void deal(Card **shuffled, Hand* hand0,Hand* hand1,int hand_size) {
         hand0->cardsInHand++; //increase number of cards
         hand1->cards[i] = shuffled[cardIndex++];
         hand1->cardsInHand++; // increase number of cards
+    }
+}
+
+void dealToTable(Card **shuffled, Hand* hand, int hand_size) {
+    for (char i = 0; i < hand_size; i++) {
+        //set the card ptr in each hand
+        //increase the index in deck
+        hand->cards[i] = shuffled[cardIndex++];
+        hand->cardsInHand++; //increase number of cards
     }
 }
 
