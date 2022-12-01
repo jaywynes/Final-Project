@@ -24,7 +24,7 @@ int compHands(Player *opp, Table tbl) {
 void bestHandCalc(CardPool *available, Player **play, int currentPlayer) {
     CardPool pool = *available;
     Player *opp = *play;
-    CommunityCards bestTemp;
+    TempCards bestTemp;
     if (evalFlush(&pool , &opp, currentPlayer, &bestTemp)) {
 
         evalStraight(&pool , &opp, currentPlayer, &bestTemp);
@@ -225,8 +225,8 @@ void matchTester(CardPool *available, Player **play, int currentPlayer, TempCard
             } else { // If it is a pair but not a trip or quad:
                     for (int j = i; j < sizeof(pool.availableCards); j++) {
                         opp[currentPlayer].bestHand.communityCards[j2] = pool.availableCards[j];
-                        trips[j2] = j;
-                        j++;
+                        pairs[j2] = j;
+                        j2++;
                     }
                 i++;
             }
@@ -246,6 +246,17 @@ void matchTester(CardPool *available, Player **play, int currentPlayer, TempCard
             }
         }
         opp[currentPlayer].bestHand.communityCards[l2] = findHighest(bestTemp.tempCards, numExtra);
+    } else if (j2 > 0) {
+        opp[currentPlayer].bHandType = Pair;
+        for (int i = j2; i < sizeof(pool.availableCards); i++) {
+            opp[currentPlayer].bestHand.communityCards[i] = pool.availableCards[i];
+        }
+        
+    } else if (k2 > 0) {
+        opp[currentPlayer].bHandType = Trips;
+        for (int i = k2; i < sizeof(pool.availableCards); i++) {
+            opp[currentPlayer].bestHand.communityCards[i] = pool.availableCards[i];
+        }
     }
 
 }
