@@ -12,6 +12,6 @@ void deal(Card **shuffled, Hand*,Hand*,int); //deal 6 cards from deck to each ha
 Card *cutDeck(Card **shuffled); //select a random card from startingAt, until end of deck
 Card *draw(Card **shuffled); // draw the top card
 void printRestOfDeck(Card **shuffled);
-void dealToTable(Card **shuffled, Hand* hand, int hand_size) {}
+void dealToTable(Card **shuffled, Hand* hand, int hand_size);
 
 #endif
