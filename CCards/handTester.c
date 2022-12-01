@@ -182,91 +182,71 @@ void matchTester(CardPool *available, Player **play, int currentPlayer, TempCard
     CardPool pool = *available;
     Player *opp = *play;
     TempCards bestTemp = *tempCards;
-
-    Card *pairs[6];
-    Card *trips[6];
-    Card *quads[4];
-
-    for (int i = 0; i < sizeof(pool.availableCards); i++) {
-        for (int j = 0; j < sizeof(pool.availableCards)-i-1; j++) {
-            if (pool.availableCards[i] == pool.availableCards[j+1] && pool.availableCards[j+1] == pool.availableCards[j+2] && pool.availableCards[i] == pool.availableCards[j+3]) {
-                quads[0] = pool.availableCards[i];
-                quads[1] = pool.availableCards[j+1];
-                quads[2] = pool.availableCards[j+2];
-                quads[3] = pool.availableCards[j+3];                
-            } else if (pool.availableCards[i] == pool.availableCards[j+1] && pool.availableCards[j+1] == pool.availableCards[j+2]) {
-                trips[0] = pool.availableCards[i];
-                trips[1] = pool.availableCards[j+1];
-                trips[2] = pool.availableCards[j+2];                
-            } else if (pool.availableCards[i] == pool.availableCards[j+1]) {
-                pairs
-            }
-        }
-    }
-
-    int cardRankTracker[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-    int numPairs = 0;
-    int numTrips = 0;
-    int quadIndex = 0;
-    int fullHouseTri = 0;
-    int fullHouseDob = 0;
-    int numLeftoverSlots = 0;
     handSorter(&pool.availableCards);
 
-    for (int i = 0; i < sizeof(pool.availableCards); i++) {
-        int j = pool.availableCards[i]->value;
-        int k = cardRankTracker[j];
-        k = k++;
-        cardRankTracker[j] = k;
-    }
+
+
+    Card *pairs[6];
+    int *trips[6];
+    int *quads[4];
+    int j2 = 0;
+    int k2 = 0;
+    int l2 = 0;
 
     for (int i = 0; i < sizeof(pool.availableCards); i++) {
-        if (cardRankTracker[i] == 2) {
-            numPairs++;
-            fullHouseDob = i;
-        } else if (cardRankTracker[i] == 3) {
-            numTrips++;
-            fullHouseTri = i;
-        } else if (cardRankTracker[i] == 4) {
-            opp[currentPlayer].bHandType = Quads;
-            quadIndex = i;
-        }
-    }
+        if (pool.availableCards[i]->value == pool.availableCards[i+1]->value) { //Pair Testing
+            if(pool.availableCards[i]->value == pool.availableCards[i+2]->value) { //Trip testing
+                if (pool.availableCards[i]->value == pool.availableCards[i+3]->value) { //Quad Testing
+                    
+                    for (int l = i; l < sizeof(pool.availableCards); l++) {
+                        opp[currentPlayer].bestHand.communityCards[l2]=pool.availableCards[l];
+                        quads[l2] = l;
+                        l2++;
+                    }
+                    opp[currentPlayer].bHandType = Quads;
+                    i = i+3;
+                    break;
 
-    if (numPairs == 1 && numTrips == 0 && opp[currentPlayer].bHandType != Quads) {
-        opp[currentPlayer].bHandType = Pair;
-        numLeftoverSlots = 3;
-        for (int i = 0; i < sizeof(pool.availableCards); i++) {
+                }  else {// If it is a trip but not a quad
 
-        }
-    }else if (numPairs == 2 && numTrips == 0 && opp[currentPlayer].bHandType != Quads) {
-        opp[currentPlayer].bHandType = TwoPair;
-        numLeftoverSlots = 1;
-    } else if (numPairs == 0 && numTrips == 1 && opp[currentPlayer].bHandType != Quads) {
-        opp[currentPlayer].bHandType = Trips;
-        numLeftoverSlots = 2;
+                    for (int k = i; k < sizeof(pool.availableCards); k++) {
+                        opp[currentPlayer].bestHand.communityCards[k2] = pool.availableCards[k];
+                        trips[k2] = k;
+                        k++;
+                    }
 
-    } else if (opp[currentPlayer].bHandType == Quads) {
-        int k = 0;
-        for (int i = 0; i < sizeof(pool.availableCards); i++) {
-            if (pool.availableCards[i]->value != quadIndex) {
-                bestTemp.tempCards[i-k] = pool.availableCards[i];
+                    i = i+2;
+                    if (k2 == 6) {
+                        break;
+                    }
+                }
+            } else { // If it is a pair but not a trip or quad:
+                    for (int j = i; j < sizeof(pool.availableCards); j++) {
+                        opp[currentPlayer].bestHand.communityCards[j2] = pool.availableCards[j];
+                        trips[j2] = j;
+                        j++;
+                    }
+                i++;
             }
         }
-        numLeftoverSlots = 1;
-    } else if (numPairs == 1 && numTrips == 1 && opp[currentPlayer].bHandType != Quads) {
-        opp[currentPlayer].bHandType = FullHouse;
-        numLeftoverSlots = 0;
-    } else if (numPairs == 2 && numTrips == 1 && opp[currentPlayer].bHandType != Quads) {
-        
     }
-    bestTemp.tempCards = [];
+    int numExtra = 0;
+    int leftover = 0;
+
+    if (opp[currentPlayer].bHandType == Quads) {
+        numExtra = 1;
+        leftover = 3;
+        int k = 0;
+        for (int i = 0; i < sizeof(pool.availableCards); i++) {
+            if (quads[0] != i && quads[1] != i && quads[2] != i && quads[3] != i) {
+                bestTemp.tempCards[k] = pool.availableCards[i];
+            }
+        }
+
+
 }
 
-void highCardExamine (CardPool *available, Player **play, int currentPlayer, TempCards *tempCards, int leftover) {
-    CardPool pool = *available;
-    Player *opp = *play;
-    TempCards bestTemp = *tempCards;
+Card *findHighest(Card **leftover, int numExtra) {
 
 }
 
