@@ -29,7 +29,7 @@ void bestHandCalc(CardPool *available, Player **play, int currentPlayer) {
 
         evalStraight(&pool , &opp, currentPlayer, &bestTemp);
 
-    } else if (opp[currentPlayer].bHandType = High) {
+    } else if (opp[currentPlayer].bHandType == High) {
         evalStraight(&pool , &opp, currentPlayer, &bestTemp);
         
     } else {
@@ -71,12 +71,12 @@ bool evalFlush(CardPool *available, Player **play, int currentPlayer, TempCards 
                 }
                 
             }
-            handSorter(&opp[currentPlayer].bestHand.communityCards);
+            handSorter(opp[currentPlayer].bestHand.communityCards);
             break;
         } else {
             int flushSuit = suitTracker[i];
             opp[currentPlayer].bHandType = Flush; //Sets hand type to flush
-            bestTemp.tempCards = (Card*)malloc(sizeof(Card)*suitTracker[i]);
+            bestTemp.tempCards = malloc(sizeof(Card*) * suitTracker[i]);
             int k=0;
             for (int j = 0; j < sizeof(pool); j++) {
                 if(pool.availableCards[j]->suit == flushSuit) {
@@ -85,7 +85,7 @@ bool evalFlush(CardPool *available, Player **play, int currentPlayer, TempCards 
                     k++;
                 }
             }
-            handSorter(&(bestTemp.tempCards));
+            handSorter(bestTemp.tempCards);
             bestTemp.numTempCards = sizeof(bestTemp.tempCards);
             break;
         }
@@ -105,7 +105,7 @@ void evalStraight(CardPool *available, Player **play, int currentPlayer, TempCar
         if (bestTemp.numTempCards > 0) {
             int streak = 0;
             for (int i = 0; i < bestTemp.numTempCards; i++) {
-                if (bestTemp.tempCards[i]->value = bestTemp.tempCards[i+1]->value) {
+                if (bestTemp.tempCards[i]->value == bestTemp.tempCards[i+1]->value) {
                     streak++;
                     if (streak == 5) {
                         opp[currentPlayer].bHandType = StraightFlush;
@@ -120,15 +120,15 @@ void evalStraight(CardPool *available, Player **play, int currentPlayer, TempCar
             
                 bool goodAce = false, goodKing = false, goodQueen = false, goodJack = false, goodTen = false;
                 for (int i = 0; i < opp[currentPlayer].bestHand.numCardsOnTable; i++) {
-                    if (opp[currentPlayer].bestHand.communityCards[i]->value = 13) {
+                    if (opp[currentPlayer].bestHand.communityCards[i]->value == 13) {
                         goodKing = true;
-                    } else if (opp[currentPlayer].bestHand.communityCards[i]->value = 12) {
+                    } else if (opp[currentPlayer].bestHand.communityCards[i]->value == 12) {
                         goodQueen = true;
-                    } else if (opp[currentPlayer].bestHand.communityCards[i]->value = 11) {
+                    } else if (opp[currentPlayer].bestHand.communityCards[i]->value == 11) {
                         goodJack = true;
-                    } else if (opp[currentPlayer].bestHand.communityCards[i]->value = 10) {
+                    } else if (opp[currentPlayer].bestHand.communityCards[i]->value == 10) {
                         goodTen = true;
-                    } else if (opp[currentPlayer].bestHand.communityCards[i]->value = 1) {
+                    } else if (opp[currentPlayer].bestHand.communityCards[i]->value == 1) {
                         goodAce = true;
                     }
                 }
@@ -141,10 +141,10 @@ void evalStraight(CardPool *available, Player **play, int currentPlayer, TempCar
 
 
     } else {
-        handSorter(&pool.availableCards);
+        handSorter(pool.availableCards);
         int streak = 0;
             for (int i = 0; i < bestTemp.numTempCards; i++) {
-                if (bestTemp.tempCards[i]->value = bestTemp.tempCards[i+1]->value) {
+                if (bestTemp.tempCards[i]->value == bestTemp.tempCards[i+1]->value) {
                     streak++;
                     if (streak == 5) {
                         opp[currentPlayer].bHandType = Straight;
@@ -158,20 +158,20 @@ void evalStraight(CardPool *available, Player **play, int currentPlayer, TempCar
             
                 bool goodAce = false, goodKing = false, goodQueen = false, goodJack = false, goodTen = false;
                 for (int i = 0; i < opp[currentPlayer].bestHand.numCardsOnTable; i++) {
-                    if (opp[currentPlayer].bestHand.communityCards[i]->value = 13) {
+                    if (opp[currentPlayer].bestHand.communityCards[i]->value == 13) {
                         goodKing = true;
-                    } else if (opp[currentPlayer].bestHand.communityCards[i]->value = 12) {
+                    } else if (opp[currentPlayer].bestHand.communityCards[i]->value == 12) {
                         goodQueen = true;
-                    } else if (opp[currentPlayer].bestHand.communityCards[i]->value = 11) {
+                    } else if (opp[currentPlayer].bestHand.communityCards[i]->value == 11) {
                         goodJack = true;
-                    } else if (opp[currentPlayer].bestHand.communityCards[i]->value = 10) {
+                    } else if (opp[currentPlayer].bestHand.communityCards[i]->value == 10) {
                         goodTen = true;
-                    } else if (opp[currentPlayer].bestHand.communityCards[i]->value = 1) {
+                    } else if (opp[currentPlayer].bestHand.communityCards[i]->value == 1) {
                         goodAce = true;
                     }
                 }
                 if (goodAce && goodKing && goodQueen && goodJack && goodTen) {
-                    opp[currentPlayer].bHandType == Straight;
+                    opp[currentPlayer].bHandType = Straight;
                 }
             }
         }
@@ -183,11 +183,9 @@ void matchTester(CardPool *available, Player **play, int currentPlayer, TempCard
     CardPool pool = *available;
     Player *opp = *play;
     TempCards bestTemp = *tempCards;
-    handSorter(&pool.availableCards);
+    handSorter(pool.availableCards);
 
-
-
-    Card *pairs[6];
+    int *pairs[6];
     int *trips[6];
     int *quads[4];
     int j2 = 0;
@@ -201,7 +199,7 @@ void matchTester(CardPool *available, Player **play, int currentPlayer, TempCard
                     
                     for (int l = i; l < sizeof(pool.availableCards); l++) {
                         opp[currentPlayer].bestHand.communityCards[l2]=pool.availableCards[l];
-                        quads[l2] = l;
+                        *quads[l2] = l;
                         l2++;
                     }
                     opp[currentPlayer].bHandType = Quads;
@@ -225,7 +223,7 @@ void matchTester(CardPool *available, Player **play, int currentPlayer, TempCard
             } else { // If it is a pair but not a trip or quad:
                     for (int j = i; j < sizeof(pool.availableCards); j++) {
                         opp[currentPlayer].bestHand.communityCards[j2] = pool.availableCards[j];
-                        pairs[j2] = j;
+                        *pairs[j2] = j;
                         j2++;
                     }
                 i++;
@@ -240,7 +238,7 @@ void matchTester(CardPool *available, Player **play, int currentPlayer, TempCard
         leftover = 3;
         int k = 0;
         for (int i = 0; i < sizeof(pool.availableCards); i++) {
-            if (quads[0] != i && quads[1] != i && quads[2] != i && quads[3] != i) {
+            if (*quads[0] != i && *quads[1] != i && *quads[2] != i && *quads[3] != i) {
                 bestTemp.tempCards[k] = pool.availableCards[i];
                 k++;
             }
